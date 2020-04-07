@@ -37,6 +37,11 @@ export default class StaticPropsDetail extends React.Component<Props> {
   }
 }
 
+
+/**
+ *  Dynamic Routes利用時にも静的なファイルを生成するためのAPIです。
+ *  pathsはビルド対象のパス、 fallbackは事前ビルドしたパス以外にアクセスしたときの動作
+ */
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = sampleUserData.map(user => ({
     params: { id: user.id.toString() },
@@ -45,6 +50,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false }
 };
 
+
+/**
+ * ビルド時に静的なファイルを事前に生成するためのAPI(ページに必要なデータをpropsとして渡します)
+ * サーバーサイドで実行される
+ * @param params
+ */
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const id = params?.id;
