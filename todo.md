@@ -5,3 +5,4 @@
 - [x] graphql-mock-with-micro
 - [x] hooks use-dispatch
 - [ ] hooks-redux
+- [ ] axios-typescript

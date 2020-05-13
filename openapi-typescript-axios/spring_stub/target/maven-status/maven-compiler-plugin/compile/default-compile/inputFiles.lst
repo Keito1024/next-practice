@@ -1,0 +1,9 @@
+/usr/src/mymaven/src/main/java/org/openapitools/api/BooksApi.java
+/usr/src/mymaven/src/main/java/org/openapitools/model/Books.java
+/usr/src/mymaven/src/main/java/org/openapitools/configuration/OpenAPIDocumentationConfig.java
+/usr/src/mymaven/src/main/java/org/openapitools/RFC3339DateFormat.java
+/usr/src/mymaven/src/main/java/org/openapitools/api/ApiUtil.java
+/usr/src/mymaven/src/main/java/org/openapitools/api/BooksApiController.java
+/usr/src/mymaven/src/main/java/org/openapitools/OpenAPI2SpringBoot.java
+/usr/src/mymaven/src/main/java/org/openapitools/model/Book.java
+/usr/src/mymaven/src/main/java/org/openapitools/configuration/HomeController.java
