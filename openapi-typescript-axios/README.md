@@ -2,8 +2,8 @@
 
 - swaggerUIで動かす
   ```
-	docker run --rm -p 8080:8080 -e SWAGGER_JSON=/local/swagger.yaml -v ${PWD}:/local swaggerapi/swagger-ui:v3.20.1
-	```
+  docker run --rm -p 8080:8080 -e SWAGGER_JSON=/local/swagger.yaml -v ${PWD}:/local swaggerapi/swagger-ui:v3.20.1
+  ```
 
 - stubサーバー作成する
 
