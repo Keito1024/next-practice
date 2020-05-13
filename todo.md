@@ -3,5 +3,5 @@
 - [x] next-typescript-graphql
 - [x] next-tutorial
 - [x] graphql-mock-with-micro
-- [ ] hooks use-dispatch
+- [x] hooks use-dispatch
 - [ ] hooks-redux
