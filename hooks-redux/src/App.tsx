@@ -1,6 +1,9 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+import React from 'react';
+
+import { TodoForm } from './components/todo/TodoFom';
+import logo from './logo.svg';
 
 function App() {
   return (
@@ -18,6 +21,7 @@ function App() {
         >
           Learn React
         </a>
+        <TodoForm />
       </header>
     </div>
   );
