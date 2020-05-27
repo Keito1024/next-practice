@@ -6,5 +6,7 @@
 - [x] hooks use-dispatch
 - [x] hooks-redux
 - [x] openApi-generator-axios-typescript
-- [ ] graphql-server-typescript
+- [x] graphql-server-typescript-query-without-apollo
+- [ ] graphql-server-typescript-mutation-without-apollo
 - [ ] graphql-client-typescript-react
+- [ ] react-test-with-jest
