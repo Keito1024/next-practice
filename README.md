@@ -1,2 +1,1 @@
-# practice
-フロントエンドなんでも用
+# frontend-practice
