@@ -5,8 +5,11 @@
 - [x] graphql-mock-with-micro
 - [x] hooks use-dispatch
 - [x] hooks-redux
+- [x] react-emotion
 - [x] openApi-generator-axios-typescript
 - [x] graphql-server-typescript-query-without-apollo
 - [ ] graphql-server-typescript-mutation-without-apollo
 - [ ] graphql-client-typescript-react
-- [ ] react-test-with-jest
+- [ ] react-unit-test-with-jest
+- [ ] react-e2e-test-with-jest
+- [ ] react-style-guide-storybook

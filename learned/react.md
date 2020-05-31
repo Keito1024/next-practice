@@ -271,3 +271,48 @@ jsdom を通じて DOM にアクセスできる JavaScript のテストランナ
 
 - React Testing Library
 実装の詳細に依存せずに React コンポーネントをテストすることができるツールセットです。このアプローチはリファクタリングを容易にし、さらにアクセスビリティのベスト・プラクティスへと手向けてくれます。コンポーネントを children 抜きに「浅く」レンダリングする方法は提供していませんが、Jest のようなテストランナーで モック することで可能です
+
+## CSS IN JS
+JSX ファイルの中にスタイルを直 接書き込める
+- styled-component
+- emotion
+star数でいうとstyled-componentのが多いが, npmのインストール数だと2020年入ってから圧倒的にemotionが上回ってる
+
+### Emotion
+スタイル適用、コンポーネント生成、オブジェクトスタイル、テンプレートスタイルが全部入りのCSS IN JSライブラリー
+ファイルファイルサイズが小さく、実行速度も速い
+EmotionのCSS prop形式では、styled-componentと比べて、マウント速度が4~5倍、レンダリング速度だと3倍早いらしい
+
+- インストール方法
+  ```sh
+  yarn add @emotion/core
+  ```
+- 使い方
+直っ感的にセグメントのpropとしてstyleを渡すことができる
+  ```tsx
+  // ファイル上部でコンパイラの宣言
+  // @jsx jsx
+  import { css, jsx } from '@emotion/core';
+  export const Sample: React.FC = () => {
+    return (
+      // フラグメントは使えない
+      <div>
+        <button css={
+          css`
+          background-color: red;
+          `
+        }>
+      </div>
+    )
+  }
+  ```
+  * コンパイラが通らない時は
+  ```json
+  '@typescript-eslint/no-unused-vars': [
+    'error',
+    {
+    varsIgnorePattern: '[Rr]eact'
+    }
+  ],
+  ```
+
