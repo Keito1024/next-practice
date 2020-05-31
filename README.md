@@ -1,2 +1,1 @@
-# practice
-なんでもリポジトリ
+# frontend-practice
