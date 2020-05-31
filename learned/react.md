@@ -320,24 +320,24 @@ EmotionのCSS prop形式では、styled-componentと比べて、マウント速�
 コンポーネントをカタログ化して、管理できるツールです。カタログ化することで、双方の行き違いを限りなく少なくできます。
 そして、FigmaやAdobe XDと連携できるなど、開発者とデザイナーの両方に嬉しい拡張機能もあります。
 
-- インストール方法
+- storybookインストール方法
   ```sh
-  yarn add @storybook/react
-  yarn add react react-dom babel-loader @babel/core
+  npx -p @storybook/cli sb init
   ```
-- package.jsonに以下のscriptを追加
-  ```json
-  "storybook": "start-storybook"
-  ```
+  .storybook/main.jsで読み込む対象のstoriesの拡張子を変更する
+  各コンポーネントに対応するtestを書く。拡張子は(.stories.tsx)
+  `yarn storybook` してGUIを開いてstorybookの画面でコンポーネントを確認する
 
-  .storybook/mainjsを作り下記を記述[公式参照](https://storybook.js.org/docs/guides/guide-react/)
-  ```js
-  module.exports = {
-    stories: ['../src/**/*.stories.[tj]sx'],
-  };
-  ```
-  storybookを起動するとGUIが用意され作成したstorybook用の
-  componentが一覧になって可視化される
+- storyshotを追加する(スナップショットを取ってテストする)
   ```sh
-  yarn storybook
+  yarn add -D @storybook/addon-storyshots react-test-renderer
   ```
+  スナップショットを生成するためのファイルを作成する。
+  ```js
+  // src/storyshots.test.js
+  import initStoryshots from '@storybook/addon-storyshots';
+  initStoryshots();
+  ```
+  yarn testを実行するとスナップショットが作成される。
+  それから各コンポーネントのテストを書く。(拡張子.test.tsx)
+  最後に、以前とったスナップショットと比較テストして影響範囲などを可視化する。

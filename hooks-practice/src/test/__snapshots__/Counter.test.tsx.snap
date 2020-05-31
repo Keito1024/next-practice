@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render test 1`] = `
+<div>
+  Count: 
+  0
+  <button
+    onClick={[Function]}
+  >
+    -
+  </button>
+  <button
+    className="css-3mgw0s-Counter"
+    onClick={[Function]}
+  >
+    +
+  </button>
+</div>
+`;
