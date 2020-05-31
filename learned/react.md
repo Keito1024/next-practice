@@ -316,3 +316,28 @@ EmotionのCSS prop形式では、styled-componentと比べて、マウント速�
   ],
   ```
 
+### Storybook (style guide)
+コンポーネントをカタログ化して、管理できるツールです。カタログ化することで、双方の行き違いを限りなく少なくできます。
+そして、FigmaやAdobe XDと連携できるなど、開発者とデザイナーの両方に嬉しい拡張機能もあります。
+
+- インストール方法
+  ```sh
+  yarn add @storybook/react
+  yarn add react react-dom babel-loader @babel/core
+  ```
+- package.jsonに以下のscriptを追加
+  ```json
+  "storybook": "start-storybook"
+  ```
+
+  .storybook/mainjsを作り下記を記述[公式参照](https://storybook.js.org/docs/guides/guide-react/)
+  ```js
+  module.exports = {
+    stories: ['../src/**/*.stories.[tj]sx'],
+  };
+  ```
+  storybookを起動するとGUIが用意され作成したstorybook用の
+  componentが一覧になって可視化される
+  ```sh
+  yarn storybook
+  ```
