@@ -306,6 +306,29 @@ EmotionのCSS prop形式では、styled-componentと比べて、マウント速�
     )
   }
   ```
+
+  別でcssを変数定義してしまう場合
+  ```tsx
+  import { css, jsx} from '@emotion/core';
+
+  const parent = css`
+    background-color: #fff;
+    color: #000;
+  `;
+
+  const child = css`
+    ${parent};
+    display: block;
+    margin: 0 auto;
+  `;
+  export const Sample: React.FC = () => {
+    return (
+      <div>
+      <button css={styles} />
+      </div>
+    )
+  }
+  ```
   * コンパイラが通らない時は
   ```json
   '@typescript-eslint/no-unused-vars': [
