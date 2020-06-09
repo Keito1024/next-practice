@@ -10,6 +10,6 @@
 - [x] graphql-server-typescript-query-without-apollo
 - [ ] graphql-server-typescript-mutation-without-apollo
 - [ ] graphql-client-typescript-react
-- [ ] react-unit-test-with-jest
+- [x] react-unit-test-with-jest
 - [ ] react-e2e-test-with-jest
-- [ ] react-style-guide-storybook
+- [x] react-style-guide-storybook
