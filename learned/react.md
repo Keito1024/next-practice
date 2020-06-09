@@ -364,3 +364,78 @@ EmotionのCSS prop形式では、styled-componentと比べて、マウント速�
   yarn testを実行するとスナップショットが作成される。
   それから各コンポーネントのテストを書く。(拡張子.test.tsx)
   最後に、以前とったスナップショットと比較テストして影響範囲などを可視化する。
+
+### FormElement
+onChangeのformから取得する際のイベントの型定義
+```tsx
+const Form: React.FC = () => {
+  const [text, setText] = useState("")
+  const handleChange = (e: React.FormEvent<HTMLInputElement>): void => {
+    setText(e.currentValue.value)
+  }
+  return (
+    <div>
+      <input type="text" value={text} onChange={changeText} />
+      <br />
+    </div>
+  )
+}
+```
+
+### Context
+下記がコンテキスト定義。
+```tsx
+// 型定義
+type ContextSample = {
+  userId: string
+}
+
+// Object
+export const ctx: ContextSample = {
+  userId: "xxxxxx"
+}
+
+// context
+export const currentUserContext = React.createContext<ContextSample>(ctx)
+```
+これをProvideで定義してあげるとchildrenでcontextが参照可能になる
+```tsx
+<currentUserContext.Provider value={入れたい値}>
+  <Component />
+</currentUserContext.Provider>
+```
+
+### type vs interface
+- 継承
+  - interfaceとtypeはお互い継承は可能
+```tsx
+// interfaceの継承
+interface IPoint2D {
+  x: number;
+  y: number;
+}
+interface IPoint3D extends IPoint2D {
+  z: number;
+}
+
+// typeの継承もどき
+type TPoint2D = {
+  x: number;
+  y: number;
+}
+type TPoint3D = TPoint2D & {
+  z: number;
+}
+
+type TPoint4D = IPoitn3D & {
+  z: number
+}
+
+interface IPoint4D extends TPoint2D {
+  z: number
+}
+```
+
+- 同盟宣言
+  - interfaceは同じ名前で定義したものは一つにマージされる
+  - typeは同盟定義できないためコンパイルエラーが起こる

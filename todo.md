@@ -13,3 +13,5 @@
 - [x] react-unit-test-with-jest
 - [ ] react-e2e-test-with-jest
 - [x] react-style-guide-storybook
+- [ ] typescript react cheat sheet
+- [ ] use FORMIK as react typescript form management
