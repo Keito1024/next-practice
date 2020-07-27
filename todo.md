@@ -15,4 +15,4 @@
 - [x] react-style-guide-storybook
 - [ ] typescript react cheat sheet
 - [ ] use FORMIK as react typescript form management
-- [ ] react-emotion-facepaint
+- [ ] udemy typescript2020
