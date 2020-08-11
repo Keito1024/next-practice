@@ -1,3 +1,202 @@
+type User =
+  | {
+      name: string;
+      age: number;
+      id: string;
+    }
+  | {
+      name: string;
+      age: number;
+      gender: string;
+    };
+
+const user = {} as User;
+/** 推論結果 */
+// 互換性のあるプロパティのみにしかアクセスできない
+// const User = {
+//   name: string;
+//   age: number;
+// }
+
+const user1: User = {
+  name: "",
+  age: 0,
+  gender: "",
+};
+
+type DeclaredUser = typeof user;
+/** 推論結果 */
+// const DeclaredUser: {
+//   name: string
+//   age: number
+//   gender: string
+// }
+
+interface User2 {
+  tag: "other";
+  id: string;
+}
+interface AppUser {
+  tag: "app";
+  appID: string;
+}
+interface ServiceUser {
+  tag: "service";
+  serviceID: string;
+}
+// tagでの絞り込み
+function getUserByIdSwitch(user: AppUser | ServiceUser | User2) {
+  switch (user.tag) {
+    case "app":
+      return user.appID;
+    case "service":
+      return user.serviceID;
+    default:
+      return user.id;
+  }
+}
+
+// inで絞り込む
+interface User3 {
+  id: string;
+}
+interface AppUser2 {
+  appName: "appName";
+  appId: string;
+}
+function getUserId(user: AppUser2 | User3) {
+  if ("appName" in user) {
+    return user.appId;
+  }
+  if ("id" in user) {
+    return user.id;
+  }
+}
+
+// Generics
+
+// 変数Annotation の Generics
+interface SampleGenerics<T> {
+  value: T;
+}
+const numberSample: SampleGenerics<number> = {
+  value: 10,
+};
+
+// 引数Annotation の Generics
+function toPayloadObject<T>(props: T) {
+  return { payload: props };
+}
+const hasAmount = toPayloadObject({ amount: 10 });
+const hasUser = toPayloadObject({ name: "Taro", age: 10 });
+
+// Genericsの制約
+interface StringGenerics<T extends string> {
+  value: T;
+}
+const hasNumber: StringGenerics<number> = { value: 10 };
+const hasString: StringGenerics<string> = {
+  value: "20",
+};
+
+interface Input {
+  value: number;
+  amount: number;
+}
+function compute<T extends Input>(props: T) {
+  return {
+    value: props.value,
+    amount: props.amount,
+    computed: props.value ** props.amount,
+  };
+}
+const computed = compute({ value: 10, amount: 2 });
+
+// Generics複数指定
+function merge<T, U>(inputA: T, inputB: U) {
+  return Object.assign({}, inputA, inputB)
+}
+const merged = merge({foo: 'foo'}, {bar: 10})
+
+// 推論・抽出
+let asString = 'string'
+let asNumber = 0
+type PrimitiveUnion = typeof asString | typeof asNumber
+
+function getSomething() {
+  return { foo: 'foo', bar: 1, baz: false}
+}
+const something = getSomething()
+
+const target: typeof something = {
+  foo: 'FOO',
+  bar: 0,
+  baz: true
+}
+
+// json型を抽出
+import json
+type Banana = (typeof json)['banana']
+
+const a = 'a'
+let b = a
+
+
+// TupleToUnion型
+// 配列にある値の型を全て抽出する
+type TupleToUnion<T> = T extends (infer I)[] ? I : never
+type FruitTuple = ["banana", "apple", "orange"]
+type FruitsUnionTuple = TupleToUnion<FruitTuple>
+
+// MapToUnion型
+type MapToUnion<T> = T extends {[k: string]: infer I} ? I : never
+type FruitsMap = {
+  banana: 'banana',
+  apple: 'apple',
+  orange: 'orange'
+}
+type FruitsUnionMap = MapToUnion<FruitsMap>
+
+// 任意型と互換性のある型を抽出
+type FruitsMap1 = {
+  banana: { name: "banana", price: number }
+  apple: { name: "apple", price: number }
+  orange: { name: "orange" }
+}
+type Filter<T> = T extends {price: number} ? T : never
+type Banana = Filter<{ name: "banana", price: number }> // 推論　{name: "banana", price: "number"}
+type Orange = Filter<{ name: "orange"}> // 推論 never
+
+// 変換・定義
+type UserDefinition = {
+  id: string;
+  name: string;
+  age?: number;
+}
+// Diff型
+type Diff<T,U> = T extends U ? never : T
+// readonly型
+type ReadOnlyUser = Readonly<UserDefinition>
+// required型
+type RequireUser = Required<UserDefinition>
+// partial型 | undefined
+type PartialUser = Partial<UserDefinition>
+// nullable
+type Nullable<T> = {[ K in keyof T]?: T[K] | null}
+type NullableUser = Nullable<User>
+// non nullable
+type NonNullableUser = NonNullable<User>
+
+// ts errorHandling
+// ● 何かが失敗したことを単に知らせることを望むのか(null、Option)、それとも、なぜ失敗した のかについてより多くの情報を与えることを望むのか(例外をスローする、例外を返す)。
+// ● 起こり得るすべての例外を明示的に処理するよう利用者に強制することを望むのか(例外を返 す)、それとも、エラー処理のボイラープレート(定型的なコード)をより少なく記述させることを 望むのか(例外をスローする)。
+// ● エラーを組み立てる方法を必要とするのか(Option)、それとも、エラーが発生したときにそれら を単に処理するのか(null、例外)。
+
+// 非同期プログラミング
+// javascriptのイベントループ
+// コールバックの処理
+  //  promiseの概念を説明する。非同期の作業を抽象化してそれらを組み立てたり直列に並べたりすることを可能にする
+
 /**
  * Tuple
  * 配列の要素数が固定になっている(typescript独自の型)
@@ -470,3 +669,22 @@ extractAndConvert({name: 'hoge'}, "name");
 
 // union型は関数やメソッドを呼び出すごとに型を選べるような柔軟性が必要な場合
 // ジェネリティクス型は限定的な型に固定したい時に向いている
+
+/**
+ * デコレータ
+ * (メタプログラミング)
+ */
+
+// デコレータとは
+function Logger(target: Function) {
+  console.log('ログ出力中...')
+}
+
+@Logger
+class Person {
+  name = 'Max';
+
+  constructor() {
+    console.log('初期化')
+  }
+}
