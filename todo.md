@@ -14,4 +14,4 @@
 - [ ] typescript react cheat sheet
 - [ ] udemy typescript2020
 - [ ] graphql-with-apollo
-- [ ] graphql-with-appsync
+- [ ] graphql-with-appsync-amplify
