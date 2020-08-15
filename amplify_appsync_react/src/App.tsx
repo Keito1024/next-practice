@@ -3,12 +3,23 @@ import './App.css';
 import { API, graphqlOperation } from 'aws-amplify';
 import React, { useEffect, useState } from 'react';
 
+import { ListTodosQuery, OnCreateTodoSubscription } from './api';
 import { createTodo } from './graphql/mutations';
 import { listTodos } from './graphql/queries';
+import { onCreateTodo } from './graphql/subscriptions';
+
+type PostSubscriptionEvent = { value: { data: OnCreateTodoSubscription } };
+type Todo = {
+  id: string;
+  name: string;
+  description: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
 
 const App: React.FC = () => {
   // 投稿リスト
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Todo[]>([]);
 
   // title
   const [name, setName] = useState("");
@@ -17,16 +28,29 @@ const App: React.FC = () => {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    const getPosts = async () => {
-      try {
-        // タスク一覧取得
-        const posts = await API.graphql(graphqlOperation(listTodos));
-        console.log(posts);
-      } catch (error) {
-        console.log(error);
+    (async () => {
+      // 最初のPost一覧取得
+      const result = await API.graphql(graphqlOperation(listTodos));
+      if ("data" in result && result.data) {
+        const posts = result.data as ListTodosQuery;
+        if (posts.listTodos) {
+          setPosts(posts.listTodos.items as Todo[]);
+        }
       }
-    };
-    getPosts();
+
+      // Post追加イベントの購読
+      const client = API.graphql(graphqlOperation(onCreateTodo));
+      if ("subscribe" in client) {
+        client.subscribe({
+          next: ({ value: { data } }: PostSubscriptionEvent) => {
+            if (data.onCreateTodo) {
+              const post: Todo = data.onCreateTodo;
+              setPosts(prev => [...prev, post]);
+            }
+          }
+        });
+      }
+    })();
   }, []);
 
   // タスクを追加
@@ -73,6 +97,16 @@ const App: React.FC = () => {
         ></input>
       </div>
       <button onClick={addTodo}>追加</button>
+      <div>
+        {posts.map(data => {
+          return (
+            <div key={data.id}>
+              <h4>{data.name}</h4>
+              <p>{data.description}</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
