@@ -18,18 +18,18 @@ type Todo = {
 };
 
 const App: React.FC = () => {
-  // 投稿リスト
+  // Todoリスト
   const [posts, setPosts] = useState<Todo[]>([]);
 
-  // title
+  // Todo名
   const [name, setName] = useState("");
 
-  // description
+  // Todo内容
   const [description, setDescription] = useState("");
 
   useEffect(() => {
     (async () => {
-      // 最初のPost一覧取得
+      // Todoの一覧取得APIを呼ぶ
       const result = await API.graphql(graphqlOperation(listTodos));
       if ("data" in result && result.data) {
         const posts = result.data as ListTodosQuery;
@@ -38,67 +38,65 @@ const App: React.FC = () => {
         }
       }
 
-      // Post追加イベントの購読
+      // 新規追加イベントの購読
       const client = API.graphql(graphqlOperation(onCreateTodo));
       if ("subscribe" in client) {
         client.subscribe({
           next: ({ value: { data } }: PostSubscriptionEvent) => {
             if (data.onCreateTodo) {
               const post: Todo = data.onCreateTodo;
-              setPosts(prev => [...prev, post]);
+              setPosts((prev) => [...prev, post]);
             }
-          }
+          },
         });
       }
     })();
   }, []);
 
-  // タスクを追加
-  const addTodo = async() => {
+  // Todoを新規追加
+  const addTodo = async () => {
     if (!name || !description) {
       return;
     }
-    // 新規登録 mutation
+    // パラメタ
     const createTodoInput = {
       name,
-      description
-    }
+      description,
+    };
 
     try {
-      await API.graphql(graphqlOperation(createTodo, {input: createTodoInput }))
+      //  Todoの新規追加APIを呼ぶ
+      await API.graphql(
+        graphqlOperation(createTodo, { input: createTodoInput })
+      );
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
-  // formEvent onChange
+  // Todo名の入力値をstateにセットする
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value)
-  }
+    setName(e.target.value);
+  }; 
 
+  // Todo内容の入力値をstateにセットする
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDescription(e.target.value);
-  }
+  };
 
   return (
     <div className="App">
       <div>
-        タイトル
-        <input
-          value={name}
-          onChange={handleChangeName}
-        ></input>
+        Todo名
+        <input value={name} onChange={handleChangeName} />
       </div>
       <div>
-        内容
-        <input
-          value={description}
-          onChange={handleChangeDescription}
-        ></input>
+        Todo内容
+        <input value={description} onChange={handleChangeDescription} />
       </div>
       <button onClick={addTodo}>追加</button>
       <div>
-        {posts.map(data => {
+        {posts.map((data) => {
           return (
             <div key={data.id}>
               <h4>{data.name}</h4>
