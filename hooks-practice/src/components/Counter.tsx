@@ -9,14 +9,14 @@ interface CounterState {
 }
 
 interface CounterAction {
-  type: ActionType;
+  type: string;
   payload: CounterState;
 }
 
-enum ActionType {
-  INCREMENT = "increment",
-  DECREMENT = "decrement",
-}
+const ActionType = {
+  increment: "INCREMENT",
+  decrement: "DECREMENT",
+} as const;
 
 const initialState = { count: 0 };
 
@@ -25,9 +25,9 @@ const reducer: React.Reducer<CounterState, CounterAction> = (
   action: CounterAction
 ) => {
   switch (action.type) {
-    case "increment":
+    case ActionType.increment:
       return { count: state.count + 1 };
-    case "decrement":
+    case ActionType.decrement:
       return { count: state.count - 1 };
     default:
       throw new Error();
@@ -39,9 +39,10 @@ export const Counter: React.FC = () => {
   return (
     <div>
       Count: {state.count}
+      <br />
       <button
         onClick={() =>
-          dispatch({ type: ActionType.DECREMENT, payload: { ...state } })
+          dispatch({ type: ActionType.decrement, payload: { ...state } })
         }
       >
         -
@@ -52,7 +53,7 @@ export const Counter: React.FC = () => {
             background-color: red;
           `}
         onClick={() =>
-          dispatch({ type: ActionType.INCREMENT, payload: { ...state } })
+          dispatch({ type: ActionType.increment, payload: { ...state } })
         }
       >
         +
