@@ -9,6 +9,8 @@ import { listTodos } from './graphql/queries';
 import { onCreateTodo } from './graphql/subscriptions';
 
 type PostSubscriptionEvent = { value: { data: OnCreateTodoSubscription } };
+// 型が不明確の時に使える
+type FixeMe<T = any> = any;
 type Todo = {
   id: string;
   name: string;
