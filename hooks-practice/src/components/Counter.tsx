@@ -14,8 +14,8 @@ interface CounterAction {
 }
 
 const ActionType = {
-  increment: "INCREMENT",
-  decrement: "DECREMENT",
+  increment: 'INCREMENT',
+  decrement: 'DECREMENT',
 } as const;
 
 const initialState = { count: 0 };
@@ -48,10 +48,9 @@ export const Counter: React.FC = () => {
         -
       </button>
       <button
-        css={
-          css`
-            background-color: red;
-          `}
+        css={css`
+          background-color: red;
+        `}
         onClick={() =>
           dispatch({ type: ActionType.increment, payload: { ...state } })
         }
