@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Modal from "./components/Modal";
 import Item from "./components/Item";
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import SwiperCore, { Pagination, Autoplay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
