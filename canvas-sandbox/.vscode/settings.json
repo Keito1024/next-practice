@@ -1,0 +1,16 @@
+{
+  // eslintを適応させる
+  "eslint.validate": ["javascript", "typescript"],
+
+  // stylelintのauto fixを有効にする
+  "stylelint.autoFixOnSave": true,
+
+  // スペルチェックの設定
+  "cSpell.ignoreRegExpList": ["[０-９Ａ-Ｚａ-ｚぁ-んァ-ヶ亜-熙纊-黑]+"],
+
+  // 保存時にauto fixさせる
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "cSpell.words": []
+}
